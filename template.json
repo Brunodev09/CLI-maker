@@ -1,0 +1,28 @@
+{
+    "templates": [
+        {
+            "projectName": "auto-backend",
+            "root": [
+                ".gitignore",
+                "tsconfig.json",
+                ".env"
+            ],
+            "src": [
+                {
+                    "controllers": [],
+                    "tools": [],
+                    "models": [],
+                    "middlewares": [
+                        "auth.ts"
+                    ],
+                    "interfaces": []
+                },
+                "Server.ts",
+                "index.ts"
+            ]
+        }
+    ],
+    "commands": [
+        "npm init", "npm install"
+    ]
+}
