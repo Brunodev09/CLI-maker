@@ -9,7 +9,7 @@ const CLI = require('clui');
 const Spinner = CLI.Spinner;
 
 class Terminal {
-    defaultColor : Color;
+    defaultColor: Color;
     spinner: any;
 
     constructor() {
@@ -17,45 +17,45 @@ class Terminal {
         this.spinner;
     }
 
-    color(n : number) : string {
-        switch(n) {
+    color(n: number): string {
+        switch (n) {
             case 1: return 'red';
             case 2: return 'green';
             case 3: return 'blue';
         }
     }
 
-    say(text : string, color : string) : void {
+    say(text: string, color?: string): void {
         if (!color) color = this.defaultColor;
         console.log(chalk[color](text));
     }
 
-    super(text : string, color : string) : void {
+    super(text: string, color: string): void {
         if (!color) color = this.defaultColor;
         console.log(chalk[color](figlet.textSync(text, { horizontalLayout: 'full' })));
     }
 
-    clear() : void {
+    clear(): void {
         cls();
     }
 
-    async ask(questions : Question[]) : Promise<any> {
+    async ask(questions: Question[]): Promise<any> {
         return await inquirer.prompt(questions);
     }
 
-    async checkbox(questions : Checkbox[]) : Promise<any> {
+    async checkbox(questions: Checkbox[]): Promise<any> {
         return await inquirer.prompt(questions);
     }
 
-    loading(text : string) {
+    loading(text: string) {
         this.spinner = new Spinner(text);
     }
 
-    loadingStart() : void {
+    loadingStart(): void {
         this.spinner.start();
     }
 
-    loadingStop() : void {
+    loadingStop(): void {
         this.spinner.stop();
     }
 

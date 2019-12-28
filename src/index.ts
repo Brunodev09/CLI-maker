@@ -11,7 +11,7 @@ async function init() {
         const main = new Main();
         await main.run();
     } catch (e) {
-        throw new Error((e || {message: e}).message);
+        throw new Error((e || { message: e }).message);
     }
 
 }

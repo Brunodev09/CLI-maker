@@ -23,6 +23,6 @@
         }
     ],
     "commands": [
-        "npm init", "npm install"
+        "npm init -y", "npm install"
     ]
 }

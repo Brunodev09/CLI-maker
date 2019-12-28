@@ -6,7 +6,7 @@ export enum COLORS {
     BLUE
 }
 
-type functionInstance = () => { };
+type functionInstance = () => {};
 
 export class Question {
     type: string;

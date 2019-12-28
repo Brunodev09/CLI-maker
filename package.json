@@ -15,6 +15,7 @@
     "clui": "^0.3.6",
     "figlet": "^1.2.4",
     "inquirer": "^7.0.1",
+    "touch": "^3.1.0",
     "typescript": "^3.4.1"
   },
   "bin": {
