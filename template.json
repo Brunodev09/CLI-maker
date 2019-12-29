@@ -7,6 +7,9 @@
                 "tsconfig.json",
                 ".env"
             ],
+            "commands": [
+                "npm init -y", "npm install"
+            ],
             "src": [
                 {
                     "controllers": [],
@@ -21,8 +24,5 @@
                 "index.ts"
             ]
         }
-    ],
-    "commands": [
-        "npm init -y", "npm install"
     ]
 }

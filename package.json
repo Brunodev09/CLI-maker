@@ -19,6 +19,6 @@
     "typescript": "^3.4.1"
   },
   "bin": {
-    "bdv": "./index.js"
+    "bdv": "./dist/src/index.js"
   }
 }

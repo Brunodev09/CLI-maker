@@ -3,35 +3,74 @@ import _ from "./tools/Terminal";
 import metadata from "../template.json";
 import { Question, Checkbox } from "./tools/Header";
 
-// @TODO - Make the templates folder inside the main projectName folder. That is, everytime this sourcecode is compiled
-// it will FIRST generate the projectName folder and a templates folder inside it. And thats where I should read the dirs from.
-// This makes it easier for people to use, so that they won't have to look where this package has been installed.
-
 export default class Main {
 
     target: string;
     completeTarget: string;
     project: any;
     cmds: string[];
+    templateDir: string;
 
     constructor() {
         this.target = "";
-        this.completeTarget = ""
+        this.completeTarget = "";
+        this.templateDir = __dirname + '/templates';
         this.project = "";
         this.cmds = [];
     }
 
-    async run() {
-        this.project = await this.select();
-        this.target = __dirname;
+    async confete(): Promise<boolean> {
+        const dice = Math.floor(Math.random() * 3);
+        let color;
+        switch (dice) {
+            case 0:
+                color = 'red';
+                break;
+            case 1:
+                color = 'green';
+                break;
+            case 2:
+                color = 'blue';
+                break;
+        }
+        _.clear();
+        _.super('brunodev09 - CLI', color);
+        return await _.ask([new Question("input", "start", "Type 'start' to execute this package.", async (value) => {
+            switch (value.toUpperCase()) {
+                case "START":
+                    return true;
+                default:
+                    return false;
+            }
+        })])
+    }
 
-        if (await Files.isDir(this.target + `/${this.project.projectName}`)) {
-            _.say(`There is already a folder named ${this.project.projectName} on ${this.target}.`, 'red');
+    async createNewTemplate() {
+        let val;
+        await _.ask([new Question("input", "temp", "Please type the name of the root folder.", (value) => {
+            if (value.length) {
+                val = value;
+                return true;
+            }
+            return false;
+        })]);
+        const folderName = val;
+        if (await Files.isDir(this.target + `/${folderName}`)) {
+            _.say(`There is already a folder named ${folderName} on ${this.target}.`, 'red');
             process.exit(1);
         }
+        await Files.createDir(this.target + `/${folderName}`);
+        this.completeTarget = this.target + `/${folderName}`;
+    }
 
-        await Files.createDir(this.target + `/${this.project.projectName}`);
-        this.completeTarget = this.target + `/${this.project.projectName}`;
+    async run() {
+
+        this.target = process.env.INIT_CWD || process.cwd();
+        let confete = await this.confete();
+        await this.createNewTemplate();
+        this.project = await this.select();
+
+        // this.target = __dirname;
 
         try {
             _.say(`Attempting to execute commands...`);
@@ -50,7 +89,7 @@ export default class Main {
             if (e && e.message && e.message.includes("FILE_NOT_FOUND_")) {
                 let s = e.message.split('_');
                 const index = s[s.length - 1];
-                const FILE_NOT_FOUND = metadata.templates[0]["root"][index];
+                const FILE_NOT_FOUND = this.project["root"][index];
                 _.say(`File ${FILE_NOT_FOUND} was not found in the folder \'./templates\`.`, 'red');
                 _.say(`Please make sure all files you want generated are included in the \'./templates\` folder of this project sourcecode.`, 'red')
                 process.exit(1);
@@ -88,14 +127,14 @@ export default class Main {
     async commands(): Promise<any> {
         return new Promise(async (resolve, reject) => {
 
-            if (!metadata.commands.length) reject("NO_CMDS");
+            if (!this.project.commands.length) reject("NO_CMDS");
 
-            for (let command of metadata.commands) {
+            for (let command of this.project.commands) {
 
                 let thread = new Promise(async (resolve, reject) => {
 
                     let c = await require('child_process').execSync(command,
-                        { cwd: this.completeTarget },
+                        { cwd: this.templateDir },
                         (err, stdout, stderr) => {
                             if (stderr || err) reject(stderr || err);
                             _.say(`[CHILD] ${stdout}`, 'blue')
@@ -110,7 +149,7 @@ export default class Main {
 
     async folderStructure(): Promise<any> {
         try {
-            let rootFiles = metadata.templates[0]["root"];
+            let rootFiles = this.project["root"];
             let fileIndex = 0;
 
             if (!rootFiles.length) {
@@ -122,7 +161,7 @@ export default class Main {
                 await this.rootFilesCreation(rootFiles, fileIndex);
 
                 _.say('Root files have been created, creating recursion tree to create other nested files and folders...');
-                await this.recursiveStrategyCreation(Object.keys(metadata.templates[0]), metadata.templates[0]);
+                await this.recursiveStrategyCreation(Object.keys(this.project), this.project);
             }
         } catch (e) {
             throw e;
@@ -146,8 +185,8 @@ export default class Main {
         _.say(`Reading files content now...`);
 
         for (let file of rootFiles) {
-            _.say(`Reading ${this.completeTarget}/${file}...`);
-            let read = await Files.read(this.target + `/templates/${file}`);
+            _.say(`Reading ${this.templateDir}/${file}...`);
+            let read = await Files.read(this.templateDir + `/${file}`);
             filesContentMap[file] = read;
         }
 
@@ -161,16 +200,16 @@ export default class Main {
 
     async recursiveStrategyCreation(data: string[], content: any): Promise<any> {
         for (let each of data) {
-            if (each !== 'root' && each !== 'projectName') {
+            if (each !== 'root' && each !== 'projectName' && each !== 'commands') {
                 if (Array.isArray(content[each])) {
                     _.say(`Creating folder ${each}...`);
-                    await Files.createDir(this.target + `/${this.project.projectName}/${each}`);
+                    await Files.createDir(this.completeTarget + `/${each}`);
                     for (let subitem of content[each]) {
                         if (typeof subitem === "string") {
                             _.say(`Reading from file ${subitem}...`);
-                            let buffer = await Files.read(this.target + `/templates/${subitem}`);
-                            _.say(`Writing on ${this.target + "/" + this.project.projectName}/${each}`);
-                            await Files.touch(this.target + `/${this.project.projectName}/${each}`, subitem, buffer);
+                            let buffer = await Files.read(this.templateDir + `/${subitem}`);
+                            _.say(`Writing on ${this.completeTarget}/${each}`);
+                            await Files.touch(this.completeTarget + `/${each}`, subitem, buffer);
                         }
                         else if (typeof subitem === "object") {
                             this.recursiveStrategyCreation(Object.keys(subitem), subitem);
@@ -182,7 +221,7 @@ export default class Main {
     }
 
     async checkTemplatesFolderForMatchingFile(fileName: string): Promise<boolean> {
-        let fileList = await Files.readDir(this.target + '/templates');
+        let fileList = await Files.readDir(this.templateDir);
         const find = fileList.find(k => k === fileName);
         return !!find;
     }
