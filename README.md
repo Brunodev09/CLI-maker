@@ -160,7 +160,8 @@ $ sudo npm install -g
 ```shell
 $ bdv
 $ start
-$ aNewFolder
+$ <nameOfAFolder>
+$ <Here you will be presented with a menu with your templates to choose from>
 ```
 
 > It's a little work on the first time, but saves tons of time whenever you want to start a new project or/and execute commands.
