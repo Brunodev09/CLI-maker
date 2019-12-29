@@ -150,7 +150,7 @@ $ npm run start
 ```
 
 
-- After that, you must make sure that EVERY FILE you mentioned in this JSON, is included inside the './templates' folder of this repo.
+- 2-) After that, you must make sure that EVERY FILE you mentioned in this JSON, is included inside the './templates' folder of this repo.
 - So paste every file that you want cloned, INSIDE './templates' with the same name you included in your template.json file.
 
 - Now all, you have to do is install the package globally. Install it with:
