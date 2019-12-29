@@ -1,6 +1,6 @@
 # CLI-maker
 
-> My take on CLI-maker to automate most of my stuff.
+> My take on a CLI-maker to automate most of my stuff.
 
 > typescript node.js fs cli oop
 
