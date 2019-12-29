@@ -60,6 +60,9 @@ $ npm run start
                 "tsconfig.json",
                 ".env"
             ],
+            "commands": [
+                "npm init -y", "npm install"
+            ],
             "src": [
                 {
                     "controllers": [],
@@ -75,9 +78,7 @@ $ npm run start
             ]
         }
     ],
-    "commands": [
-        "npm init -y", "npm install"
-    ]
+
 }
 ```
 - Here, there are a few important properties, some are fixed in which you're not supposed to edit and others are custom.
@@ -133,6 +134,9 @@ $ npm run start
             "root": [
                 "whateverFilesYouWantInRoot.extension"
             ],
+            "commands": [
+                "yourCommand", "yourCommand2", "yourCommand3"
+            ],
             "yourFolder1": [
                 {
                     "aSubFolder": ['file.extension', 'anotherfile.extension'],
@@ -141,9 +145,7 @@ $ npm run start
             ]
         }
     ],
-    "commands": [
-        "npm init -y", "npm install"
-    ]
+
 }
 ```
 
