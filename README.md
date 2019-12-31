@@ -60,6 +60,9 @@ $ npm run start
                 "tsconfig.json",
                 ".env"
             ],
+            "commands": [
+                "npm init -y", "npm install"
+            ],
             "src": [
                 {
                     "controllers": [],
@@ -75,9 +78,7 @@ $ npm run start
             ]
         }
     ],
-    "commands": [
-        "npm init -y", "npm install"
-    ]
+
 }
 ```
 - Here, there are a few important properties, some are fixed in which you're not supposed to edit and others are custom.
@@ -133,6 +134,9 @@ $ npm run start
             "root": [
                 "whateverFilesYouWantInRoot.extension"
             ],
+            "commands": [
+                "yourCommand", "yourCommand2", "yourCommand3"
+            ],
             "yourFolder1": [
                 {
                     "aSubFolder": ['file.extension', 'anotherfile.extension'],
@@ -141,14 +145,12 @@ $ npm run start
             ]
         }
     ],
-    "commands": [
-        "npm init -y", "npm install"
-    ]
+
 }
 ```
 
 
-- After that, you must make sure that EVERY FILE you mentioned in this JSON, is included inside the './templates' folder of this repo.
+- 2-) After that, you must make sure that EVERY FILE you mentioned in this JSON, is included inside the './templates' folder of this repo.
 - So paste every file that you want cloned, INSIDE './templates' with the same name you included in your template.json file.
 
 - Now all, you have to do is install the package globally. Install it with:
