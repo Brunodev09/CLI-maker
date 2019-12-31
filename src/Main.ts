@@ -99,6 +99,7 @@ export default class Main {
 
     }
     // @TODO - Tipefy the JSON template. 
+    // @TODO - Add the option to process everything inside current dir instead of creating a new folder everytime.
     async select(): Promise<any> {
         let choices = [];
         let projects = {};
