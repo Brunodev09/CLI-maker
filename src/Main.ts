@@ -220,6 +220,7 @@ export default class Main {
                 }
             }
         }
+        _.say('Done!');
     }
 
     async checkTemplatesFolderForMatchingFile(fileName: string): Promise<boolean> {
