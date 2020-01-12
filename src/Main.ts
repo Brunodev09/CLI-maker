@@ -164,6 +164,7 @@ export default class Main {
 
                 _.say('Root files have been created, creating recursion tree to create other nested files and folders...');
                 await this.recursiveStrategyCreation(Object.keys(this.project), this.project);
+
             }
         } catch (e) {
             throw e;
@@ -220,7 +221,7 @@ export default class Main {
                 }
             }
         }
-        _.say('Done!');
+        _.say("Done! Happy coding :)");
     }
 
     async checkTemplatesFolderForMatchingFile(fileName: string): Promise<boolean> {

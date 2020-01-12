@@ -3,22 +3,23 @@
         {
             "projectName": "nodeProject",
             "root": [
+                "package.json",
                 ".gitignore",
                 "tsconfig.json",
                 ".env"
             ],
             "commands": [
-                "npm init -y", "npm install"
+                "npm install"
             ],
             "src": [
                 {
                     "controllers": [],
-                    "tools": [],
                     "models": [],
                     "middlewares": [
                         "auth.ts"
                     ],
-                    "interfaces": []
+                    "interfaces": [],
+                    "tools": ["Files.ts", "Header.ts", "Terminal.ts"]
                 },
                 "Server.ts",
                 "index.ts"
