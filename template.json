@@ -28,10 +28,28 @@
         {
             "projectName": "lightNodeProject",
             "root": [
-                "tsconfig.json"
+                "tsconfig.json",
+                "package.json"
             ],
-            "commands": [],
+            "commands": [
+                "npm i"
+            ],
             "tools": ["Files.ts", "Header.ts", "Terminal.ts"]
+        },
+        {
+            "projectName": "electronTemplate",
+            "root": [
+                "tsconfig.json",
+                "package.json",
+                "Window.ts",
+                "Main.ts"
+            ],
+            "commands": [
+                "npm i",
+                "npm install --save-dev electron"
+            ],
+            "tools": ["Files.ts", "Header.ts", "Terminal.ts"],
+            "views": ["entry.html"]
         }
     ]
 }
